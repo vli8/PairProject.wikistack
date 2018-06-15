@@ -15,9 +15,6 @@ app.use(express.static(__dirname + '/public'));//making file available
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));//convert the body content input into object useable in js
 
-const init = async ()=>{
-    await models.db.sync();
-}
 
 
 app.get("/", (req,res,next)=>{
@@ -25,6 +22,9 @@ app.get("/", (req,res,next)=>{
 });
 
 db.authenticate().then(() => {console.log('connected to the database');});
-app.listen(3000);
+const init = async ()=>{
+    await db.sync();
+    app.listen(3000);
+}
 
 init();
